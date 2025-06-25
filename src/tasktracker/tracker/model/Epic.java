@@ -1,5 +1,8 @@
+package tracker.model;
+
 import java.util.ArrayList;
 import java.util.List;
+import tracker.Status;
 
 public class Epic extends Task {
     private final List<Integer> subtaskIds = new ArrayList<>();
@@ -24,7 +27,7 @@ public class Epic extends Task {
     public String toString() {
         return "Эпик{" +
                 "id=" + id +
-                ", title='" + title + ''' +
+                ", title='" + title + '\'' +
                 ", status=" + status +
                 ", подзадачи=" + subtaskIds +
                 '}';

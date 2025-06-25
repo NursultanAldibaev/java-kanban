@@ -1,3 +1,8 @@
+package tracker.controllers;
+
+import tracker.model.*;
+import tracker.Status;
+
 import java.util.*;
 
 public class TaskManager {
@@ -11,21 +16,30 @@ public class TaskManager {
         return nextId++;
     }
 
-    public void createTask(Task task) {
-        tasks.put(task.getId(), task);
+    public int createTask(Task task) {
+        int id = generateId();
+        task.setId(id);
+        tasks.put(id, task);
+        return id;
     }
 
-    public void createEpic(Epic epic) {
-        epics.put(epic.getId(), epic);
+    public int createEpic(Epic epic) {
+        int id = generateId();
+        epic.setId(id);
+        epics.put(id, epic);
+        return id;
     }
 
-    public void createSubtask(Subtask subtask) {
-        subtasks.put(subtask.getId(), subtask);
+    public int createSubtask(Subtask subtask) {
+        int id = generateId();
+        subtask.setId(id);
+        subtasks.put(id, subtask);
         Epic epic = epics.get(subtask.getEpicId());
         if (epic != null) {
-            epic.addSubtaskId(subtask.getId());
+            epic.addSubtaskId(id);
             updateEpicStatus(epic);
         }
+        return id;
     }
 
     public void updateTask(Task task) {
@@ -64,6 +78,23 @@ public class TaskManager {
                 updateEpicStatus(epic);
             }
         }
+    }
+
+    public void deleteTasks() {
+        tasks.clear();
+    }
+
+    public void deleteSubtasks() {
+        for (Epic epic : epics.values()) {
+            epic.clearSubtasks();
+            updateEpicStatus(epic);
+        }
+        subtasks.clear();
+    }
+
+    public void deleteEpics() {
+        epics.clear();
+        subtasks.clear();
     }
 
     public List<Task> getAllTasks() {

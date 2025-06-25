@@ -1,3 +1,7 @@
+package tracker.model;
+
+import tracker.Status;
+
 public class Subtask extends Task {
     private final int epicId;
 
@@ -14,7 +18,7 @@ public class Subtask extends Task {
     public String toString() {
         return "Подзадача{" +
                 "id=" + id +
-                ", title='" + title + ''' +
+                ", title='" + title + '\'' +
                 ", status=" + status +
                 ", epicId=" + epicId +
                 '}';

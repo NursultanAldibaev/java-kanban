@@ -1,3 +1,7 @@
+package tracker.model;
+
+import tracker.Status;
+
 public class Task {
     protected String title;
     protected String description;
@@ -23,11 +27,15 @@ public class Task {
         this.status = status;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "Задача{" +
                 "id=" + id +
-                ", title='" + title + ''' +
+                ", title='" + title + '\'' +
                 ", status=" + status +
                 '}';
     }
