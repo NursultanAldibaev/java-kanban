@@ -1,12 +1,10 @@
 package tracker.model;
 
-import tracker.Status;
-
 public class Subtask extends Task {
-    private final int epicId;
+    private int epicId;
 
-    public Subtask(String title, String description, int id, Status status, int epicId) {
-        super(title, description, id, status);
+    public Subtask(String name, String description, Status status, int epicId) {
+        super(name, description, status);
         this.epicId = epicId;
     }
 
@@ -14,13 +12,13 @@ public class Subtask extends Task {
         return epicId;
     }
 
+    public void setEpicId(int epicId) {
+        this.epicId = epicId;
+    }
+
     @Override
     public String toString() {
-        return "Подзадача{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", status=" + status +
-                ", epicId=" + epicId +
-                '}';
+        return String.format("Subtask{id=%d, name='%s', description='%s', status=%s, epicId=%d}",
+                id, name, description, status, epicId);
     }
 }

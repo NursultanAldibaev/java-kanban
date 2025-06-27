@@ -1,22 +1,33 @@
 package tracker.model;
 
-import tracker.Status;
+import java.util.Objects;
 
 public class Task {
-    protected String title;
-    protected String description;
     protected int id;
+    protected String name;
+    protected String description;
     protected Status status;
 
-    public Task(String title, String description, int id, Status status) {
-        this.title = title;
+    public Task(String name, String description, Status status) {
+        this.name = name;
         this.description = description;
-        this.id = id;
         this.status = status;
     }
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public Status getStatus() {
@@ -27,17 +38,10 @@ public class Task {
         this.status = status;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     @Override
     public String toString() {
-        return "Задача{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", status=" + status +
-                '}';
+        return String.format("Task{id=%d, name='%s', description='%s', status=%s}",
+                id, name, description, status);
     }
 
     @Override
@@ -50,6 +54,6 @@ public class Task {
 
     @Override
     public int hashCode() {
-        return id;
+        return Objects.hash(id);
     }
 }
