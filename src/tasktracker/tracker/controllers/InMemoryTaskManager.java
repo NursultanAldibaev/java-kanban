@@ -1,9 +1,13 @@
 package tracker.controllers;
 
 import tracker.model.*;
-import tracker.model.Status;
 import java.util.*;
 
+/**
+ * Менеджер задач, хранящий задачи в оперативной памяти.
+ * Управляет созданием, обновлением, удалением и получением задач, эпиков и подзадач.
+ * Также взаимодействует с {@link HistoryManager} для хранения истории просмотров.
+ */
 public class InMemoryTaskManager implements TaskManager {
     private int nextId = 1;
     private final HistoryManager historyManager = Managers.getDefaultHistory();
@@ -11,10 +15,6 @@ public class InMemoryTaskManager implements TaskManager {
     private final Map<Integer, Task> tasks = new HashMap<>();
     private final Map<Integer, Epic> epics = new HashMap<>();
     private final Map<Integer, Subtask> subtasks = new HashMap<>();
-
-    public int generateId() {
-        return nextId++;
-    }
 
     @Override
     public int createTask(Task task) {
@@ -162,6 +162,12 @@ public class InMemoryTaskManager implements TaskManager {
         return historyManager.getHistory();
     }
 
+    /**
+     * Обновляет статус эпика на основе статусов его подзадач.
+     * NEW — если все подзадачи новые, DONE — если все завершены, иначе IN_PROGRESS.
+     *
+     * @param epic эпик, для которого нужно обновить статус
+     */
     private void updateEpicStatus(Epic epic) {
         List<Integer> subtaskIds = epic.getSubtaskIds();
         if (subtaskIds.isEmpty()) {
@@ -185,5 +191,15 @@ public class InMemoryTaskManager implements TaskManager {
         } else {
             epic.setStatus(Status.IN_PROGRESS);
         }
+    }
+
+    /**
+     * Генерирует уникальный идентификатор задачи.
+     * Используется только внутри класса.
+     *
+     * @return уникальный ID
+     */
+    private int generateId() {
+        return nextId++;
     }
 }
